@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillAce Teaching Interface</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="../skillAce.jpeg" alt="SkillAce Logo">
+    </div>
+
+    <!-- Navigation (inside header so it moves with it) -->
+    <nav class="navigation">
+      <ul>
+        <li><a href="../homepage.html">Home</a></li>
+        <li><a href="../homepage.html">Categories</a></li>
+        <li><a href="../chat.html">Your Chats</a></li>
+        
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="https://myrepute.app/">Check Your Repute</a></li>
+        <li><a href="../recommendation/recommend.html">Skill recommendation system</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Search (icon expands on click) -->
+      <div class="search-container">
+        <i class="fas fa-search search-toggle" aria-hidden="true"></i>
+        <input type="text" class="search-input" placeholder="Search for skills, mentors, courses..." aria-label="Search">
+      </div>
+
+      <!-- Video Call -->
+      <a href="WEB_UIKITS.html" class="video-call-btn" target="_blank" title="Video Call">
+        <i class="fas fa-video"></i>
+      </a>
+
+      <!-- Credits -->
+      <div class="credits"><span>Credits: 0</span></div>
+
+      <!-- User Profile -->
+      <div class="user-profile">
+        <img src="../imageassets/Abhinav.jpeg" alt="User Profile">
+        <div class="user-dropdown">
+          <a href="#"><i class="fas fa-user"></i> My Profile</a>
+          <a href="#"><i class="fas fa-book"></i> My Courses</a>
+          <a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <header>
+      <h1>What do you want to teach today?</h1>
+      <div class="controls">
+        <select id="skillSelect">
+          <option value="">Select a Skill</option>
+        </select>
+        <select id="levelSelect">
+          <option value="">Select a Level</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+        <input type="text" id="searchBar" placeholder="Search skill...">
+      </div>
+    </header>
+
+    <div id="learnersContainer" class="cards-container">
+      <!-- Learner cards will go here -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

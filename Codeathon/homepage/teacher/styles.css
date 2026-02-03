@@ -1,0 +1,296 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* ---------------- Header ---------------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(26, 26, 26, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px; /* ✅ makes edges round */
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+
+.logo img {
+  height: 60px;
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.navigation ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+.navigation ul li a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-speed);
+}
+.navigation ul li a:hover {
+  color: var(--highlight);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Search */
+.search-container {
+  position: relative;
+}
+.search-input {
+  width: 0;
+  opacity: 0;
+  padding: 0.4rem 0.6rem;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  transition: width var(--transition-speed), opacity var(--transition-speed);
+}
+.search-container.active .search-input {
+  width: 220px;
+  opacity: 1;
+}
+.search-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-light);
+}
+
+/* Video Call Button */
+.video-call-btn {
+  font-size: 1.3rem;
+  color: var(--highlight);
+  transition: transform var(--transition-speed);
+}
+.video-call-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Credits */
+.credits span {
+  font-weight: bold;
+  color: var(--highlight);
+}
+
+/* User Profile */
+.user-profile {
+  position: relative;
+  cursor: pointer;
+}
+.user-profile img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.user-profile:hover .user-dropdown {
+  display: flex;
+}
+.user-dropdown a {
+  padding: 0.7rem 1rem;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: background var(--transition-speed);
+}
+.user-dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Container for all content */
+.container {
+  width: 100%;
+  max-width: 900px;  /* fixed max width */
+  margin: 0 auto;
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 2.8rem;
+  color: #f0f9ff;
+  text-shadow: 0 0 10px #00bcd4;
+}
+
+/* Controls: dropdowns and search */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Dropdown and search input styles - dark theme */
+.controls select,
+.controls input[type="text"] {
+  padding: 0.75rem 1.2rem;
+  border: 1.5px solid #444c56;
+  border-radius: 10px;
+  background-color: #1a1a2f;
+  color: #f0f9ff;
+  font-size: 1.1rem;
+  outline: none;
+  min-width: 200px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.controls select:hover,
+.controls input[type="text"]:hover,
+.controls select:focus,
+.controls input[type="text"]:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 8px #00bcd4;
+  background-color: #121624;
+  color: #fff;
+}
+
+/* Placeholder color */
+.controls input[type="text"]::placeholder {
+  color: #a0a9b8;
+}
+
+/* Learners grid - exactly 2 columns on desktop */
+.learners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* exactly 2 columns */
+  gap: 2rem 2.5rem;
+  justify-items: center;
+}
+
+/* Card styling */
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  width: 100%;      /* Fill the grid column */
+  max-width: none;  /* Remove max-width to allow full width */
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.5),
+    inset 0 0 10px 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  color: #e0e0e0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 15px 40px 0 rgba(0, 188, 212, 0.6),
+    inset 0 0 15px 2px rgba(0, 188, 212, 0.2);
+  border-color: #00bcd4;
+}
+
+/* Profile image */
+.card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #00bcd4;
+  object-fit: cover;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+/* Name and skill */
+.card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  color: #00e5ff;
+  text-shadow: 0 0 5px #00bcd4;
+}
+
+.card p.skill-level {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #a0c4ff;
+}
+
+/* Bio */
+.card p.bio {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: #d0dce0;
+  flex-grow: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .controls select,
+  .controls input[type="text"] {
+    min-width: 100%;
+    max-width: 400px;
+  }
+
+  /* Switch learners grid to 1 column on smaller screens */
+  .learners-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Settings</title>
+    <style>
+        :root {
+            --bg-color: #f9fafb;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --accent-color: #3b82f6;
+            --toggle-bg: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --font-size: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+            --accent-color: #60a5fa;
+            --toggle-bg: #4b5563;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            font-size: var(--font-size);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .settings-card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .settings-section {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-section:last-child {
+            border-bottom: none;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .setting-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-label {
+            font-weight: 500;
+        }
+
+        .setting-description {
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--toggle-bg);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Font size controls */
+        .font-size-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .font-size-btn {
+            background-color: var(--toggle-bg);
+            border: none;
+            color: var(--text-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .font-size-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .font-size-value {
+            margin: 0 12px;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .notification-toggle {
+            margin-top: 1rem;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Settings</h1>
+            <div class="subtitle">Customize your app experience</div>
+        </header>
+
+        <div class="settings-card">
+            <div class="settings-section">
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Dark Mode</div>
+                        <div class="setting-description">Switch between light and dark themes</div>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Font Size</div>
+                        <div class="setting-description">Adjust the text size throughout the app</div>
+                    </div>
+                    <div class="font-size-controls">
+                        <button class="font-size-btn" id="decreaseFontBtn">-</button>
+                        <span class="font-size-value" id="fontSizeValue">16</span>
+                        <button class="font-size-btn" id="increaseFontBtn">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">Notifications</div>
+                        <div class="setting-description">Enable or disable app notifications</div>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="notificationToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="notification-toggle" id="testNotificationBtn" style="display: none; text-align: right;">
+                    <button style="padding: 6px 12px; background-color: var(--accent-color); color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        Test Notification
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Settings saved successfully!</div>
+
+    <script>
+        // DOM Elements
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const notificationToggle = document.getElementById('notificationToggle');
+        const testNotificationBtn = document.getElementById('testNotificationBtn');
+        const decreaseFontBtn = document.getElementById('decreaseFontBtn');
+        const increaseFontBtn = document.getElementById('increaseFontBtn');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        const toast = document.getElementById('toast');
+
+        // Load saved settings or set defaults
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dark mode
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            darkModeToggle.checked = isDarkMode;
+            if (isDarkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+
+            // Font size
+            const savedFontSize = localStorage.getItem('fontSize') || 16;
+            setFontSize(savedFontSize);
+
+            // Notifications
+            const notificationsEnabled = localStorage.getItem('notifications') === 'true';
+            notificationToggle.checked = notificationsEnabled;
+            testNotificationBtn.style.display = notificationsEnabled ? 'block' : 'none';
+        });
+
+        // Dark mode toggle
+        darkModeToggle.addEventListener('change', () => {
+            if (darkModeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('darkMode', 'false');
+            }
+            showToast('Theme updated');
+        });
+
+        // Font size controls
+        decreaseFontBtn.addEventListener('click', () => {
+            const currentSize = parseInt(fontSizeValue.textContent);
+            if (currentSize > 12) {
+                setFontSize(currentSize - 1);
+                showToast('Font size decreased');
+            }
+        });
+
+        increaseFontBtn.addEventListener('click', () => {
+            const currentSize = parseInt(fontSizeValue.textContent);
+            if (currentSize < 24) {
+                setFontSize(currentSize + 1);
+                showToast('Font size increased');
+            }
+        });
+
+        function setFontSize(size) {
+            document.documentElement.style.setProperty('--font-size', `${size}px`);
+            fontSizeValue.textContent = size;
+            localStorage.setItem('fontSize', size);
+        }
+
+        // Notifications toggle
+        notificationToggle.addEventListener('change', () => {
+            const isEnabled = notificationToggle.checked;
+            localStorage.setItem('notifications', isEnabled);
+            testNotificationBtn.style.display = isEnabled ? 'block' : 'none';
+            
+            if (isEnabled) {
+                // Request notification permission if not already granted
+                if (Notification && Notification.permission !== 'granted') {
+                    Notification.requestPermission();
+                }
+                showToast('Notifications enabled');
+            } else {
+                showToast('Notifications disabled');
+            }
+        });
+
+        // Test notification
+        testNotificationBtn.querySelector('button').addEventListener('click', () => {
+            if (Notification && Notification.permission === 'granted') {
+                new Notification('Test Notification', {
+                    body: 'Hey! SkillAce just sent you a notification!'
+                });
+            } else {
+                showToast('Please allow notifications in your browser settings');
+            }
+        });
+
+        // Toast notification function
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

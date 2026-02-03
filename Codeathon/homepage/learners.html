@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mentor Search by Skill</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e6f0ff;
+      margin: 20px;
+      color: #1a1a1a;
+    }
+    /* ---------------- Header ---------------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(26, 26, 26, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px; /* ✅ makes edges round */
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+}
+
+.logo img {
+  height: 60px;
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.navigation ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+.navigation ul li a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-speed);
+}
+.navigation ul li a:hover {
+  color: var(--highlight);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Search */
+.search-container {
+  position: relative;
+}
+.search-input {
+  width: 0;
+  opacity: 0;
+  padding: 0.4rem 0.6rem;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  transition: width var(--transition-speed), opacity var(--transition-speed);
+}
+.search-container.active .search-input {
+  width: 220px;
+  opacity: 1;
+}
+.search-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-light);
+}
+
+/* Video Call Button */
+.video-call-btn {
+  font-size: 1.3rem;
+  color: var(--highlight);
+  transition: transform var(--transition-speed);
+}
+.video-call-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Credits */
+.credits span {
+  font-weight: bold;
+  color: var(--highlight);
+}
+
+/* User Profile */
+.user-profile {
+  position: relative;
+  cursor: pointer;
+}
+.user-profile img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.user-profile:hover .user-dropdown {
+  display: flex;
+}
+.user-dropdown a {
+  padding: 0.7rem 1rem;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: background var(--transition-speed);
+}
+.user-dropdown a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1, h3 {
+      color: #003366;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .mentor-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .mentor-card {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      border-radius: 8px;
+      flex: 1 1 calc(33.333% - 40px);
+      min-width: 280px;
+      transition: transform 0.2s;
+      border-left: 5px solid #003366;
+    }
+    .mentor-card:hover {
+      transform: translateY(-5px);
+    }
+    .mentor-card p {
+      margin-bottom: 8px;
+    }
+    .mentor-skills {
+      margin: 10px 0;
+      list-style: none;
+      padding-left: 0;
+    }
+    .mentor-skills li {
+      background: #cce0ff;
+      display: inline-block;
+      padding: 5px 10px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #003366;
+    }
+    .rating {
+      margin: 10px 0;
+      color: #ffa500;
+      font-weight: bold;
+    }
+    .thumbnail {
+      margin-top: 10px;
+    }
+    .thumbnail img {
+      width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+    .thumbnail img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="skillAce.jpeg" alt="SkillAce Logo">
+    </div>
+
+    <!-- Navigation (inside header so it moves with it) -->
+    <nav class="navigation">
+      <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="chat.html">Your Chats</a></li>
+        
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="https://myrepute.app/">Check Your Repute</a></li>
+        <li><a href="../homepage/recommendation/recommend.html">Skill recommendation system</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Search (icon expands on click) -->
+      <div class="search-container">
+        <i class="fas fa-search search-toggle" aria-hidden="true"></i>
+        <input type="text" class="search-input" placeholder="Search for skills, mentors, courses..." aria-label="Search">
+      </div>
+
+      <!-- Video Call -->
+      <a href="WEB_UIKITS.html" class="video-call-btn" target="_blank" title="Video Call">
+        <i class="fas fa-video"></i>
+      </a>
+
+      <!-- Credits -->
+      <div class="credits"><span>Credits: 0</span></div>
+
+      <!-- User Profile -->
+      <div class="user-profile">
+        <img src="../homepage/imageassets/Abhinav.jpeg" alt="User Profile">
+        <div class="user-dropdown">
+          <a href="#"><i class="fas fa-user"></i> My Profile</a>
+          <a href="#"><i class="fas fa-book"></i> My Courses</a>
+          <a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <header>
+      <h1>Search for Mentors by Skill</h1>
+      <p>Type a skill to find relevant mentors across domains.</p>
+    </header>
+    <input type="text" id="searchInput" placeholder="Enter a skill (e.g., Python, Design, Data Science)">
+    <div class="mentor-grid" id="mentorGrid">
+      <!-- Mentor cards will be rendered here -->
+    </div>
+  </div>
+
+  <script>
+    const mentors = [
+      {
+        id: 1,
+        name: 'Alice Johnson',
+        skills: ['Python', 'Data Science', 'Machine Learning'],
+        bio: 'Alice is an experienced data scientist with a passion for teaching AI concepts.',
+        email: 'alice@example.com',
+        rating: 4.8,
+        videoId: 'LHBE6Q9XlzI'
+      },
+      {
+        id: 2,
+        name: 'Bob Smith',
+        skills: ['UI/UX Design', 'Graphic Design', 'Illustration'],
+        bio: 'Bob specializes in user interface design and creative graphics.',
+        email: 'bob@example.com',
+        rating: 4.5,
+        videoId: '3Y4gU3cNzN0'
+      },
+      {
+        id: 3,
+        name: 'Clara Williams',
+        skills: ['Web Development', 'JavaScript', 'React'],
+        bio: 'Clara has a strong background in full-stack development and modern JS frameworks.',
+        email: 'clara@example.com',
+        rating: 4.7,
+        videoId: 'bMknfKXIFA8'
+      },
+      {
+        id: 4,
+        name: 'David Lee',
+        skills: ['Cybersecurity', 'Network Security', 'Ethical Hacking'],
+        bio: 'David has years of experience in IT security and ethical hacking practices.',
+        email: 'david@example.com',
+        rating: 4.9,
+        videoId: '3Kq1MIfTWCE'
+      },
+      {
+        id: 5,
+        name: 'Elena Perez',
+        skills: ['Python', 'Automation', 'DevOps'],
+        bio: 'Elena is enthusiastic about DevOps practices and automation scripts in Python.',
+        email: 'elena@example.com',
+        rating: 4.6,
+        videoId: '0yWAtQ6v6yY'
+      },
+      {
+        id: 6,
+        name: 'Farhan Siddiqui',
+        skills: ['Cloud Computing', 'AWS', 'Docker'],
+        bio: 'Farhan helps startups migrate and scale their infrastructure using the cloud.',
+        email: 'farhan@example.com',
+        rating: 4.4,
+        videoId: 'A2Z0LdMoms4'
+      },
+      {
+        id: 7,
+        name: 'Gita Menon',
+        skills: ['Business Analytics', 'Excel', 'Power BI'],
+        bio: 'Gita makes numbers talk through dashboard storytelling and insights.',
+        email: 'gita@example.com',
+        rating: 3.7,
+        videoId: 'bQ-HTp-tx40'
+      },
+      {
+        id: 8,
+        name: 'Hari Om',
+        skills: ['Public Speaking', 'Leadership', 'Communication'],
+        bio: 'Hari mentors on soft skills and becoming a confident communicator.',
+        email: 'hari@example.com',
+        rating: 4.3,
+        videoId: 'fSDhWZiSedFTgT2R'
+      },
+      {
+        id: 9,
+        name: 'Isha Arora',
+        skills: ['Content Writing', 'SEO', 'Digital Marketing'],
+        bio: 'Isha transforms brand presence through compelling content and strategy.',
+        email: 'isha@example.com',
+        rating: 4.6,
+        videoId: 'pZkQzNGQWxE'
+      },
+      {
+        id: 10,
+        name: 'Jayant Rathore',
+        skills: ['Robotics', 'IoT', 'Embedded Systems'],
+        bio: 'Jayant designs real-world solutions using microcontrollers and sensors.',
+        email: 'jayant@example.com',
+        rating: 4.8,
+        videoId: 'GR5LaVn_-OA'
+      }
+    ];
+
+    function renderMentors(list) {
+      const container = document.getElementById('mentorGrid');
+      container.innerHTML = '';
+      if (list.length === 0) {
+        container.innerHTML = '<p>No mentors found for this skill.</p>';
+        return;
+      }
+      list.forEach(mentor => {
+        const thumbnailUrl = `https://img.youtube.com/vi/${mentor.videoId}/hqdefault.jpg`;
+        const videoUrl = `https://www.youtube.com/watch?v=${mentor.videoId}`;
+        const card = document.createElement('div');
+        card.className = 'mentor-card';
+        card.innerHTML = `
+          <h3>${mentor.name}</h3>
+          <p>${mentor.bio}</p>
+          <div class="rating">⭐ Rating: ${mentor.rating}</div>
+          <strong>Skills:</strong>
+          <ul class="mentor-skills">
+            ${mentor.skills.map(skill => `<li>${skill}</li>`).join('')}
+          </ul>
+          <p>Email: <a href="mailto:${mentor.email}">${mentor.email}</a></p>
+          <div class="thumbnail">
+            <a href="${videoUrl}" target="_blank" title="Watch video by ${mentor.name}">
+              <img src="${thumbnailUrl}" alt="Video by ${mentor.name}">
+            </a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase();
+      const filteredMentors = mentors.filter(mentor =>
+        mentor.skills.some(skill => skill.toLowerCase().includes(query))
+      );
+      renderMentors(filteredMentors);
+    });
+
+    renderMentors(mentors);
+  </script>
+</body>
+</html>

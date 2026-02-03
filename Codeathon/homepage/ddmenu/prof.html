@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    h1 { margin-bottom: 1rem; }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #444;
+      margin-bottom: 1rem;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .upload-btn {
+      background: #00c6ff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+      margin-bottom: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .upload-btn:hover {
+      background: #007acc;
+    }
+
+    .input-field, .role-select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      background: #292929;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+
+    .btns button {
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .save-btn {
+      background: #00c6ff;
+    }
+
+    .reset-btn {
+      background: #ff4444;
+    }
+
+    .save-btn:hover {
+      background: #008ccc;
+    }
+
+    .reset-btn:hover {
+      background: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Profile</h1>
+    
+    <img src="" id="profilePic" class="profile-pic" alt="Profile Picture"/>
+    <br />
+    <label class="upload-btn">
+      Upload Picture
+      <input type="file" id="imgInput" accept="image/*" />
+    </label>
+
+    <input type="text" id="nameInput" class="input-field" placeholder="Your Name"/>
+    <textarea id="bioInput" class="input-field" placeholder="Short Bio" rows="3"></textarea>
+    
+    <select id="roleSelect" class="role-select">
+      <option value="Learner">Learner</option>
+      <option value="Teacher">Teacher</option>
+    </select>
+
+    <input type="text" id="skillsInput" class="input-field" placeholder="Skills (comma-separated)"/>
+    
+    <div class="badge-container" id="skillBadges"></div>
+
+    <div class="btns">
+      <button class="save-btn" onclick="saveProfile()">Save</button>
+      <button class="reset-btn" onclick="resetProfile()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    const profilePic = document.getElementById("profilePic");
+    const imgInput = document.getElementById("imgInput");
+    const nameInput = document.getElementById("nameInput");
+    const bioInput = document.getElementById("bioInput");
+    const roleSelect = document.getElementById("roleSelect");
+    const skillsInput = document.getElementById("skillsInput");
+    const skillBadges = document.getElementById("skillBadges");
+
+    // Load from localStorage on page load
+    window.onload = () => {
+      const saved = JSON.parse(localStorage.getItem("userProfile"));
+      if (saved) {
+        nameInput.value = saved.name || "";
+        bioInput.value = saved.bio || "";
+        roleSelect.value = saved.role || "Learner";
+        skillsInput.value = saved.skills || "";
+        profilePic.src = saved.pic || "https://via.placeholder.com/120";
+        updateBadges(skillsInput.value);
+      } else {
+        profilePic.src = "https://via.placeholder.com/120";
+      }
+    };
+
+    imgInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profilePic.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    skillsInput.addEventListener("input", () => {
+      updateBadges(skillsInput.value);
+    });
+
+    function updateBadges(skillsStr) {
+      const skills = skillsStr.split(",").map(s => s.trim()).filter(s => s !== "");
+      skillBadges.innerHTML = "";
+      skills.forEach(skill => {
+        const badge = document.createElement("div");
+        badge.className = "badge";
+        badge.innerText = skill;
+        skillBadges.appendChild(badge);
+      });
+    }
+
+    function saveProfile() {
+      const profileData = {
+        name: nameInput.value,
+        bio: bioInput.value,
+        role: roleSelect.value,
+        skills: skillsInput.value,
+        pic: profilePic.src
+      };
+      localStorage.setItem("userProfile", JSON.stringify(profileData));
+      alert("Profile saved locally!");
+    }
+
+    function resetProfile() {
+      localStorage.removeItem("userProfile");
+      location.reload();
+    }
+  </script>
+</body>
+</html>

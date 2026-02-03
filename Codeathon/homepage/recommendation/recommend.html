@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skill Recommendation Quiz</title>
+  <link rel="stylesheet" href="quiz.css"/>
+  <script defer src="quiz.js"></script>
+</head>
+<body>
+    <header class="header">
+    <div class="logo">
+      <img src="../skillAce.jpeg" alt="SkillAce Logo">
+    </div>
+
+    <!-- Navigation (inside header so it moves with it) -->
+    <nav class="navigation">
+      <ul>
+        <li><a href="../homepage.html">Home</a></li>
+        <li><a href="../homepage.html">Categories</a></li>
+        <li><a href="../chat.html">Your Chats</a></li>
+        
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="https://myrepute.app/">Check Your Repute</a></li>
+        <li><a href="../recommendation/recommend.html">Skill recommendation system</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Search (icon expands on click) -->
+      <div class="search-container">
+        <i class="fas fa-search search-toggle" aria-hidden="true"></i>
+        <input type="text" class="search-input" placeholder="Search for skills, mentors, courses..." aria-label="Search">
+      </div>
+
+      <!-- Video Call -->
+      <a href="WEB_UIKITS.html" class="video-call-btn" target="_blank" title="Video Call">
+        <i class="fas fa-video"></i>
+      </a>
+
+      <!-- Credits -->
+      <div class="credits"><span>Credits: 0</span></div>
+
+      <!-- User Profile -->
+      <div class="user-profile">
+        <img src="../imageassets/Abhinav.jpeg" alt="User Profile">
+        <div class="user-dropdown">
+          <a href="#"><i class="fas fa-user"></i> My Profile</a>
+          <a href="#"><i class="fas fa-book"></i> My Courses</a>
+          <a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="quiz-container">
+    <h1>Personalized Skill Recommendation Quiz</h1>
+    <form id="quizForm">
+      <div class="question">
+        <label>1. What are your main areas of interest?</label>
+        <select name="interests" multiple required>
+          <option value="technology">Technology</option>
+          <option value="arts">Arts & Design</option>
+          <option value="business">Business & Marketing</option>
+          <option value="science">Science & Research</option>
+          <option value="health">Healthcare & Wellness</option>
+          <option value="education">Education</option>
+          <option value="sports">Sports & Fitness</option>
+          <option value="social">Social Work & Community</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>2. Which work environments do you thrive in?</label>
+        <select name="environment" required>
+          <option value="">--Select--</option>
+          <option value="indoor">Indoor/Office Setting</option>
+          <option value="outdoor">Outdoor/Nature</option>
+          <option value="remote">Remote/Flexible</option>
+          <option value="lab">Laboratory/Research</option>
+          <option value="field">Fieldwork/On-Site</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>3. What motivates you the most?</label>
+        <select name="motivation" required>
+          <option value="">--Select--</option>
+          <option value="innovation">Innovation & Problem Solving</option>
+          <option value="creativity">Creativity & Expression</option>
+          <option value="leadership">Leadership & Influence</option>
+          <option value="service">Helping Others</option>
+          <option value="money">Financial Success</option>
+          <option value="impact">Making an Impact</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>4. What is your preferred way of learning?</label>
+        <select name="learning" required>
+          <option value="">--Select--</option>
+          <option value="visual">Visual (videos, infographics)</option>
+          <option value="hands-on">Hands-on (projects, practice)</option>
+          <option value="reading">Reading & Research</option>
+          <option value="collaboration">Group Learning</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>5. Choose your long-term goals:</label>
+        <select name="goals" multiple required>
+          <option value="startup">Start a business</option>
+          <option value="career">Climb the career ladder</option>
+          <option value="freelance">Become a freelancer</option>
+          <option value="innovate">Invent something new</option>
+          <option value="teach">Become a mentor or educator</option>
+          <option value="change">Drive social change</option>
+        </select>
+      </div>
+
+      <div class="submit-btn">
+        <button type="submit">Get Recommendations</button>
+      </div>
+    </form>
+    <div id="result" class="result"></div>
+  </div>
+</body>
+</html>
