@@ -1,0 +1,20 @@
+{
+  "name": "skillace-backend",
+  "version": "1.0.0",
+  "description": "Skillace backend using Node.js, Express and Supabase",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "author": "Kashish",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
