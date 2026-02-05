@@ -1,5 +1,4 @@
 const supabase = require("../config/supabase");
-
 class QuizAttemptModel {
   static async findByIdempotencyKey(idempotencyKey) {
     const { data } = await supabase
@@ -36,3 +35,4 @@ class QuizAttemptModel {
 }
 
 module.exports = QuizAttemptModel;
+
